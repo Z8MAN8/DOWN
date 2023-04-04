@@ -29,6 +29,7 @@ int16_t chassis_moto_current[4];
 
 //底盘陀螺转速系数
 char spin_flag=0;
+uint8_t spin_conver_flag = 0;
 float yaw_relative_angle=0;
 
 float chassis_total_x;
@@ -121,8 +122,9 @@ void Chassis_Get_mode(void){
                 chassis.ctrl_mode = CHASSIS_OPEN_LOOP;
             }break;
         case CHASSIS_SPIN:
-            if (spin_flag==0){
+            if (spin_conver_flag==1){
                 chassis.ctrl_mode = CHASSIS_FOLLOW_GIMBAL;
+                spin_conver_flag = 0;
             }break;
         case CHASSIS_FLY:
             if ((rc.kb.bit.SHIFT & rc.kb.bit.W) != 1){
@@ -212,9 +214,11 @@ void Chassis_Follow_control(void){
 void Chassis_Spin_control(void){
     Chassis_Get_control_information();
     if(rc.kb.bit.E)
-    spin_flag++;
-    if(rc.kb.bit.E && rc.kb.bit.SHIFT)
-        spin_flag=0;
+        spin_flag++;
+    if(rc.kb.bit.E && rc.kb.bit.SHIFT) {
+        spin_flag = 0;
+        spin_conver_flag = 1;
+    }
     chassis.vw=10*spin_flag;   //陀螺旋转速度
     Chassis_Top_handle();
     Chassis_Custom_control();
