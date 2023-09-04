@@ -21,13 +21,13 @@ static void DWT_CNT_Update(void);
 
 void DWT_Init(uint32_t CPU_Freq_mHz)
 {
-    /* 使能DWT外设 */
+    /* 浣胯兘DWT澶栬 */
     CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 
-    /* DWT CYCCNT寄存器计数清0 */
+    /* DWT CYCCNT瀵勫瓨鍣ㄨ鏁版竻0 */
     DWT->CYCCNT = (uint32_t)0u;
 
-    /* 使能Cortex-M DWT CYCCNT寄存器 */
+    /* 浣胯兘Cortex-M DWT CYCCNT瀵勫瓨鍣?*/
     DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 
     CPU_FREQ_Hz = CPU_Freq_mHz * 1000000;

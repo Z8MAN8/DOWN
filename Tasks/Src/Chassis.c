@@ -179,7 +179,7 @@ void Chassis_Follow_control(void){
 void Chassis_Spin_control(void){
     Chassis_Get_control_information();
     if(rc.kb.bit.E)
-    spin_flag++;
+        spin_flag++;
     if(rc.kb.bit.E && rc.kb.bit.SHIFT)
         spin_flag=0;
     chassis.vw=10*spin_flag;   //ÍÓÂÝÐý×ªËÙ¶È
